@@ -1,118 +1,200 @@
+<div align="center">
+
+<img src="public/icons/icon128.png" alt="Cleanplaats" width="96" height="96" />
+
 # Cleanplaats
 
-Cleanplaats is een browserextensie voor [Marktplaats](https://www.marktplaats.nl/), [2dehands](https://www.2dehands.be/) en [2ememain](https://www.2ememain.be/) die rommel uit zoekresultaten en overzichtspagina's haalt. De extensie helpt gebruikers om sneller door relevante advertenties te bladeren door promotionele, storende en ongewenste listings te verbergen.
+**Marktplaats, 2dehands en 2ememain — zonder spam, dagtoppers en bedrijfsadvertenties.**
 
-Gebouwd voor Chromium-browsers en Firefox, met een modulaire codebase die eenvoudiger te onderhouden en uit te breiden is.
+[![Version](https://img.shields.io/badge/version-2.0.7-2563eb?style=flat-square)](./package.json)
+[![WXT](https://img.shields.io/badge/built%20with-WXT%200.20-ff7e1d?style=flat-square&logo=googlechrome&logoColor=white)](https://wxt.dev)
+[![React](https://img.shields.io/badge/React-19-61dafb?style=flat-square&logo=react&logoColor=000)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.x-3178c6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Manifest V3](https://img.shields.io/badge/Manifest-V3-4285f4?style=flat-square&logo=googlechrome&logoColor=white)](https://developer.chrome.com/docs/extensions/mv3/intro/)
+[![Vitest](https://img.shields.io/badge/tested%20with-Vitest-6e9f18?style=flat-square&logo=vitest&logoColor=white)](https://vitest.dev)
+[![Chrome](https://img.shields.io/badge/Chrome-supported-34a853?style=flat-square&logo=googlechrome&logoColor=white)](https://www.google.com/chrome/)
+[![Firefox](https://img.shields.io/badge/Firefox-supported-ff7139?style=flat-square&logo=firefoxbrowser&logoColor=white)](https://www.mozilla.org/firefox/)
 
-## Wat doet Cleanplaats?
+</div>
 
-Cleanplaats voegt een compact bedieningspaneel toe aan ondersteunde pagina's en laat gebruikers zelf bepalen wat verborgen wordt.
+---
 
-Belangrijkste functies:
+## Overzicht
 
-- Verbergt topadvertenties, dagtoppers, bedrijfsadvertenties en promotionele stickers
-- Ondersteunt verborgen verkopers en blacklist-termen op basis van advertentietitels
-- Bevat een dark mode voor zowel het paneel als de marktplaatsinterface
-- Ondersteunt meertalige varianten, inclusief Nederlandse en Franse termen op 2dehands en 2ememain
-- Onthoudt voorkeuren zoals filters, sortering, resultaten per pagina en thema-instelling
-- Toont onboarding en update-notities bij nieuwe versies
+Cleanplaats is een browserextensie die overzichtspagina's en advertenties op
+[Marktplaats](https://www.marktplaats.nl/), [2dehands](https://www.2dehands.be/)
+en [2ememain](https://www.2ememain.be/) opschoont. Topadvertenties, dagtoppers,
+bedrijfsadvertenties en promotieblokken worden uit de weg gehaald, en
+gebruikers kunnen zelf verkopers en zoektermen verbergen.
 
-## Ondersteunde websites
+Deze codebase is volledig herschreven met **WXT + React 19 + TypeScript**, met
+behoud van bestaande functionaliteit, voorkeuren en domeinondersteuning.
 
-- `marktplaats.nl`
-- `2dehands.be`
-- `2ememain.be`
+## Functies
 
-## Screenshot
-in progress
+- **Slimme opschoning** — verbergt topadvertenties, dagtoppers, bedrijfsadvertenties en promotionele stickers.
+- **Verkopersbeheer** — verberg specifieke verkopers in één klik, direct vanaf advertentie- of overzichtspagina's.
+- **Blacklist op titel** — onderdruk listings op basis van zelfgekozen woorden of frases.
+- **Dark mode** — donker thema voor zowel het Cleanplaats-paneel als de Marktplaats-interface, zonder visuele flicker bij het laden.
+- **Verkoper-ouderdomswaarschuwing** — krijg een melding bij accounts jonger dan een door jou gekozen periode (dagen, weken, maanden of jaren).
+- **Meertalige ondersteuning** — werkt met de Nederlandse en Franse termen op 2dehands en 2ememain.
+- **Persistente voorkeuren** — filters, sortering, resultaten per pagina en thema-instellingen worden onthouden.
+- **Onboarding & update-notities** — heldere uitleg bij installatie en bij iedere nieuwe versie.
 
-## Installatie voor lokaal gebruik
+## Ondersteunde sites
 
-### Chrome of andere Chromium-browsers
+| Domein | Land | Taal |
+| --- | --- | --- |
+| `marktplaats.nl` | NL | Nederlands |
+| `2dehands.be` | BE | Nederlands |
+| `2ememain.be` | BE | Frans |
 
-1. Clone deze repository.
-2. Open `chrome://extensions`.
-3. Zet `Developer mode` aan.
-4. Kies `Load unpacked`.
-5. Selecteer de rootmap van deze repository.
+## Browserondersteuning
 
-### Firefox
+| Browser | Manifest | Status |
+| --- | --- | --- |
+| Chromium (Chrome, Edge, Brave, Arc, Opera) | MV3 | Ondersteund |
+| Firefox (desktop + Android) | MV3 | Ondersteund (`strict_min_version: 121.0`) |
 
-1. Clone deze repository.
-2. Open `about:debugging#/runtime/this-firefox`.
-3. Kies `Load Temporary Add-on`.
-4. Selecteer het bestand [manifest.json](/home/aron/projects/Cleanplaats/manifest.json).
+Gecko-instellingen (extensie-id en minimum versie) blijven in de
+manifestconfiguratie behouden.
 
-## Ontwikkeling
+## Aan de slag
 
-Deze repository gebruikt geen buildstap. De extensie draait direct op de bestanden in de repo.
+### Vereisten
 
-Tijdens development werk je meestal zo:
+- Node.js 20 of hoger
+- npm 10 of hoger
 
-1. Pas bestanden aan in de repo.
-2. Herlaad de extensie in de browser.
-3. Ververs een ondersteunde pagina op Marktplaats, 2dehands of 2ememain.
-
-Handige controle:
+### Installeren
 
 ```bash
-node --check content/shared.js
-node --check content/notifications.js
+npm install
+```
+
+`postinstall` voert automatisch `wxt prepare` uit en genereert de typings in
+`.wxt/`.
+
+### Development
+
+```bash
+# Chromium
+npm run dev
+
+# Firefox
+npm run dev:firefox
+```
+
+WXT start een dev-runtime en schrijft de extensie naar `.output/`. Laad die
+map als unpacked extension in je browser.
+
+### Productiebuilds
+
+```bash
+# Chromium (MV3)
+npm run build
+
+# Firefox (MV3)
+npm run build:firefox
+```
+
+### Distributiezips
+
+```bash
+npm run zip
+npm run zip:firefox
+```
+
+### Quality gates
+
+```bash
+npm run compile   # tsc --noEmit
+npm run test      # vitest run
 ```
 
 ## Projectstructuur
 
-De codebase is opgesplitst per verantwoordelijkheid:
-
 ```text
-background/         Service worker modules
-content/            Content-script modules
-icons/              Extensie-assets
-background.js       Bootstrap voor background modules
-content.js          Bootstrap voor content modules
-content.css         Paneel- en UI-styling
-dark-mode.css       Dark mode overrides voor ondersteunde sites
-theme-init.js       Vroege theme-initialisatie om flash te voorkomen
-manifest.json       Browser extension manifest
+src/
+  entrypoints/      WXT entrypoints (background, main content, theme-init)
+  content/          Content runtime, services, React-paneel
+    panel/          CleanplaatsPanel.tsx + hooks/state
+    services/       cleanup, blacklist-inject, theme, notifications, …
+    runtime/        store en bootstrap
+    locale/         paneelteksten
+    utils/          site- en sorthelpers
+  background/       Background services, listeners en messaging
+    services/       settings, navigation, hash-url, keepalive, rules
+  shared/           Types, constants, storage- en messaging-utilities
+  styles/           Content/panel + dark mode CSS
+  types/            Asset-typedeclaraties
+public/
+  icons/            Extensie-assets (gekopieerd naar de build)
+tests/              Vitest-suites (background/content/shared)
+wxt.config.ts       WXT-config en manifestdeclaratie
+vitest.config.ts    Vitest-config
 ```
 
 ## Belangrijke modules
 
-- `content/cleanup.js`: detecteert en verbergt listings
-- `content/blacklist.js`: beheer van blacklist-termen en verborgen verkopers
-- `content/theme.js`: thema-logica en dark mode synchronisatie
-- `content/notifications.js`: onboarding, update-popup en toastmeldingen
-- `content/ui.js`: opbouw van het Cleanplaats-paneel
-- `background/`: achtergrondlogica voor lifecycle, messaging en URL-regels
+| Module | Verantwoordelijkheid |
+| --- | --- |
+| `src/content/services/cleanup.ts` | Detecteert en verbergt listings/ads in DOM-mutaties. |
+| `src/content/services/blacklist-inject.ts` | Beheert verborgen verkopers en injecteert "verberg verkoper"-knoppen. |
+| `src/content/services/blacklist-terms.ts` | Filtert advertenties op zelfgekozen titeltermen. |
+| `src/content/services/theme.ts` | Thema-logica en dark-mode-synchronisatie. |
+| `src/content/services/notifications.ts` | Onboarding, update-popup en toastmeldingen. |
+| `src/content/panel/CleanplaatsPanel.tsx` | React-paneel met hooks, store en tabbladen. |
+| `src/background/services/rules.ts` | URL-regels via `declarativeNetRequest`. |
+| `src/background/services/keepalive.ts` | Service-worker keepalive via `alarms`. |
 
-## Rechten
+## Permissies
 
-Cleanplaats gebruikt browserrechten die nodig zijn voor:
+Cleanplaats vraagt de volgende browserrechten aan in `wxt.config.ts`:
 
-- opslag van gebruikersinstellingen
-- injecteren van scripts en styles op ondersteunde domeinen
-- tab- en navigatie-events voor extensielogica
+| Permissie | Reden |
+| --- | --- |
+| `storage` | Opslag van gebruikersinstellingen, blacklist en thema. |
+| `scripting` | Injecteren van content scripts en styles. |
+| `tabs` | Reageren op tab-events voor extensielogica. |
+| `webNavigation` | Detecteren van navigaties binnen Marktplaats SPA-routes. |
+| `declarativeNetRequest` | URL-regels voor netwerkfilters. |
+| `alarms` | Service-worker keepalive. |
 
-Zie [manifest.json](/home/aron/projects/Cleanplaats/manifest.json) voor de actuele lijst van permissies en host-permissies.
+Host-permissies zijn beperkt tot:
 
-## Roadmap
+```text
+*://*.marktplaats.nl/*
+*://*.2dehands.be/*
+*://*.2ememain.be/*
+```
 
-Mogelijke vervolgstappen:
+## Tech stack
 
-- extra regressietests voor selector-wijzigingen op de ondersteunde sites
-- visuele regression checks voor dark mode
-- verdere opschoning van content-script styling en componentstructuur
+- **[WXT](https://wxt.dev) 0.20** — extension framework met first-class MV3-ondersteuning
+- **[React](https://react.dev) 19** — UI voor het in-page paneel
+- **[TypeScript](https://www.typescriptlang.org) 6** — strikte types in alle entrypoints
+- **[Vitest](https://vitest.dev) 4** — unit-tests voor shared utilities en content/background services
+- **[@wxt-dev/module-react](https://www.npmjs.com/package/@wxt-dev/module-react)** — React-integratie binnen WXT
 
 ## Bijdragen
 
-Issues en verbeterideeën zijn welkom. Gebruik bij voorkeur GitHub Issues voor:
+Bug reports, regressies en feature requests zijn welkom via GitHub Issues.
+Geef bij een melding bij voorkeur aan:
 
-- bugs
+- welk domein (marktplaats.nl, 2dehands.be, 2ememain.be)
+- welke browser en versie
+- een URL of screenshot van het probleem
+- of het probleem ook optreedt na het uitzetten van de extensie
+
+Zinvolle categorieën:
+
+- bugs op overzichts- of advertentiepagina's
 - regressies na markup-wijzigingen op de marktplaatssites
-- feature requests
-- compatibiliteitsproblemen tussen Chrome en Firefox
+- compatibiliteitsproblemen tussen Chromium en Firefox
+- voorstellen voor nieuwe filters of paneelopties
 
 ## Versie
 
-Huidige versie in deze repository: `2.0.4`
-
+Huidige versie: **`2.0.7`** — zie `src/shared/constants/update-notes.ts` voor
+de volledige changelog die in de extensie wordt getoond.
